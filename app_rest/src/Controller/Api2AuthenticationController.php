@@ -28,8 +28,13 @@ class Api2AuthenticationController extends Api2Controller
 
     protected function addNew($data)
     {
-        /** @var User $user */
-        $this->return = ['access_token' => 'sdfgsfg'];
+        $res = $this->Users->checkLogin($data);
+
+//        $this->
+        $this->return = [
+            'access_token' => 'sdfgsfg',
+            'user' => $res,
+        ];
     }
 
 }
