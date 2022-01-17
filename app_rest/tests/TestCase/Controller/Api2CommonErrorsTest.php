@@ -5,6 +5,8 @@ namespace App\Test\TestCase\Controller;
 
 use App\Lib\Consts\CacheGrp;
 use Cake\Cache\Cache;
+use Cake\TestSuite\Fixture\FixtureStrategyInterface;
+use Cake\TestSuite\Fixture\TransactionStrategy;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -16,6 +18,11 @@ abstract class Api2CommonErrorsTest extends TestCase
     const SELLER_ID = '50';
 
     protected $currentAccessToken = null;
+
+    protected function getFixtureStrategy(): FixtureStrategyInterface
+    {
+        return new TransactionStrategy();
+    }
 
     protected function clearUserCache()
     {
