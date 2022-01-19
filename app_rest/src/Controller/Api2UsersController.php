@@ -36,4 +36,19 @@ class Api2UsersController extends Api2Controller
 
         $this->return = $this->Users->get($saved->id);
     }
+
+    protected function getData($id)
+    {
+        /** @var User $user */
+        $user = $this->Users->get($id);
+        $this->return = $user;
+    }
+
+    protected function getList()
+    {
+        /** @var User $user */
+        $users = $this->Users->find()
+            ->all();
+        $this->return = $users;
+    }
 }
