@@ -11,6 +11,8 @@ use Cake\ORM\TableRegistry;
 
 class UsersTable extends AppTable
 {
+
+
     public static function load(): UsersTable
     {
         /** @var UsersTable $table */
@@ -21,6 +23,7 @@ class UsersTable extends AppTable
     public function initialize(array $config): void
     {
         $this->addBehavior('Timestamp');
+        $this->hasMany('Notebooks');
     }
 
     public function getDependentUserIDs($uID): array
