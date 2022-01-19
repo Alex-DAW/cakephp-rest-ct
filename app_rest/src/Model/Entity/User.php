@@ -54,16 +54,4 @@ class User extends Entity
     {
         return $this->firstname . ' ' . $this->lastname;
     }
-
-    protected function _getCreated(): string
-    {
-        $frozenTime = new FrozenTime($this->_fields['created']);
-        return $frozenTime->format('d-m-Y');
-    }
-
-    protected function _getModified(): string
-    {
-        $frozenTime = new FrozenTime($this->_fields['modified']);
-        return $frozenTime->format('d-m-Y');
-    }
 }

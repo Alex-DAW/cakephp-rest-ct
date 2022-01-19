@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Model\Table\UsersTable;
-use Cake\I18n\FrozenTime;
-
 class Api2UsersControllerTest extends Api2CommonErrorsTest
 {
     protected $fixtures = [
-        'app.Users'
+        'app.Users', 'app.Notebooks'
     ];
 
     protected function _getEndpoint(): string
@@ -21,21 +18,19 @@ class Api2UsersControllerTest extends Api2CommonErrorsTest
     public function testAddNew_InputData()
     {
         $data = [
-            'email'=> 'test@example.com',
-            'firstname'=> 'Alex',
-            'lastname'=> 'Gomez',
-            'password'=> 'passpass'
+            'email' => 'new@example.com',
+            'firstname' => 'Alex',
+            'lastname' => 'Gomez',
+            'password' => 'passpass'
         ];
-
+        $expectedFullName = $data['firstname'] . ' ' . $data['lastname'];
         $this->post($this->_getEndpoint(), $data);
 
         $this->assertResponseOk($this->_getBodyAsString());
         $return = json_decode($this->_getBodyAsString(), true)['data'];
 
-        $this->assertEquals('test@example.com', $return['email']);
-        $this->assertEquals('Alex', $return['firstname']);
-        $this->assertEquals('Gomez', $return['lastname']);
-        $this->assertStringStartsWith('$2y$10$', $return['password']);
+        $this->assertEquals('new@example.com', $return['email']);
+        $this->assertEquals($expectedFullName, $return['full_name']);
     }
 
     public function testGetData_GetUser1_GetsSingleUser()
@@ -45,8 +40,8 @@ class Api2UsersControllerTest extends Api2CommonErrorsTest
             'email' => 'test@example.com',
             'full_name' => 'My Name My Surname',
             'group_id' => 3,
-            'created' => '18-01-2021',
-            'modified' => '18-01-2021',
+            'created' => '2021-01-18T10:39:23+00:00',
+            'modified' => '2021-01-18T10:41:31+00:00',
             'notebooks' => [
                 [
                     'id' => 1,

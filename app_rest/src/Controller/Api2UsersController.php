@@ -40,7 +40,7 @@ class Api2UsersController extends Api2Controller
     protected function getData($id)
     {
         /** @var User $user */
-        $user = $this->Users->get($id);
+        $user = $this->Users->getUserWithNotebooks($id);
         $this->return = $user;
     }
 

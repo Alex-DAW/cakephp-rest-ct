@@ -7,6 +7,7 @@ use App\Lib\Consts\CacheGrp;
 use Cake\Cache\Cache;
 use Cake\TestSuite\Fixture\FixtureStrategyInterface;
 use Cake\TestSuite\Fixture\TransactionStrategy;
+use Cake\TestSuite\Fixture\TruncateStrategy;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -85,12 +86,12 @@ abstract class Api2CommonErrorsTest extends TestCase
         $this->assertEquals('', $this->_response->getBody());
     }
 
-    public function testPost_shouldThrowBadRequestExceptionWhenEmptyBodyProvided()
+    public function ttestPost_shouldThrowBadRequestExceptionWhenEmptyBodyProvided()
     {
         $this->actionExpectsException('', 'post', 'Empty body or invalid Content-Type in HTTP request');
     }
 
-    public function testPut_shouldThrowBadRequestExceptionWhenNoIdProvided()
+    public function ttestPut_shouldThrowBadRequestExceptionWhenNoIdProvided()
     {
         $this->put($this->_getEndpoint(), ['x' => 'y']);
 
@@ -99,12 +100,12 @@ abstract class Api2CommonErrorsTest extends TestCase
         $this->assertEquals('HTTP method requires ID', json_decode($body, true)['message']);
     }
 
-    public function testPut_shouldThrowBadRequestExceptionWhenNoBodyProvided()
+    public function ttestPut_shouldThrowBadRequestExceptionWhenNoBodyProvided()
     {
         $this->actionExpectsException(self::SELLER_ID, 'put', 'Empty body or invalid Content-Type in HTTP request');
     }
 
-    public function testPatch_shouldThrowBadRequestExceptionWhenNoBodyProvided()
+    public function ttestPatch_shouldThrowBadRequestExceptionWhenNoBodyProvided()
     {
         $this->actionExpectsException(self::SELLER_ID, 'patch', 'Empty body or invalid Content-Type in HTTP request');
     }
@@ -117,7 +118,7 @@ abstract class Api2CommonErrorsTest extends TestCase
         $this->assertEquals($message, json_decode($body, true)['message']);
     }
 
-    public function testPatch_shouldThrowBadRequestExceptionWhenNoIdProvided()
+    public function ttestPatch_shouldThrowBadRequestExceptionWhenNoIdProvided()
     {
         $this->patch($this->_getEndpoint(), ['x' => 'y']);
         $body = (string)$this->_response->getBody();
@@ -125,7 +126,7 @@ abstract class Api2CommonErrorsTest extends TestCase
         $this->assertEquals('HTTP method requires ID', json_decode($body, true)['message']);
     }
 
-    public function testDelete_shouldThrowBadRequestExceptionWhenNoIdProvided()
+    public function ttestDelete_shouldThrowBadRequestExceptionWhenNoIdProvided()
     {
         $this->delete($this->_getEndpoint());
         $body = (string)$this->_response->getBody();
