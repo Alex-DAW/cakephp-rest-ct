@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -11,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string email
  * @property mixed group_id
  * @property mixed $password
+ * @property mixed $created
+ * @property mixed $modified
  */
 class User extends Entity
 {
@@ -30,7 +33,14 @@ class User extends Entity
     ];
 
     protected $_hidden = [
-        'deleted'
+        'deleted',
+        'firstname',
+        'lastname',
+        'password',
+    ];
+
+    protected $_virtual = [
+        'full_name',
     ];
 
     protected function _setPassword($password)
@@ -38,5 +48,22 @@ class User extends Entity
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher)->hash($password);
         }
+    }
+
+    protected function _getFullName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    protected function _getCreated(): string
+    {
+        $frozenTime = new FrozenTime($this->_fields['created']);
+        return $frozenTime->format('d-m-Y');
+    }
+
+    protected function _getModified(): string
+    {
+        $frozenTime = new FrozenTime($this->_fields['modified']);
+        return $frozenTime->format('d-m-Y');
     }
 }
