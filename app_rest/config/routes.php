@@ -12,6 +12,7 @@ return static function (RouteBuilder $routes) {
         ]));
         $builder->connect('/ping/*', \App\Controller\Api2PingController::route());
         $builder->connect('/users/*', \App\Controller\Api2UsersController::route());
+        $builder->connect('/users/{userID}/notebooks/*', \App\Controller\Api2NotebooksController::route());
         $builder->connect('/authentication/*', \App\Controller\Api2AuthenticationController::route());
     });
 
