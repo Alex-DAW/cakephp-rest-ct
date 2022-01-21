@@ -2,6 +2,7 @@
 
 namespace App\Test\Fixture;
 
+use App\Lib\Consts\NotebookShapes;
 use Cake\TestSuite\Fixture\TestFixture;
 
 class NotebooksFixture extends TestFixture
@@ -10,8 +11,8 @@ class NotebooksFixture extends TestFixture
         [
             'id' => 1,
             'user_id' => 1,
-            'title' => 'Título 1',
-            'shape' => 'TODO',
+            'title' => 'Title 1',
+            'shape' => NotebookShapes::TODO,
             'created' => '2021-01-18 10:39:23',
             'modified' => '2021-01-18 10:41:31'
         ],
