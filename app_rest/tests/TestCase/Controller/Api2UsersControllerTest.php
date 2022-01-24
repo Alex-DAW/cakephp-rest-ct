@@ -46,8 +46,8 @@ class Api2UsersControllerTest extends Api2CommonErrorsTest
                 [
                     'id' => 1,
                     'user_id' => 1,
-                    'title' => 'Título 1',
-                    'shape' => 'TODO',
+                    'title' => 'Title 1',
+                    'shape' => 'todo',
                     'created' => '2021-01-18T10:39:23+00:00',
                     'modified' => '2021-01-18T10:41:31+00:00'
                 ]
