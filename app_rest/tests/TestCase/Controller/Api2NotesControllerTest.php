@@ -107,13 +107,13 @@ class Api2NotesControllerTest extends Api2CommonErrorsTest
     }
 
 
-    public function testDelete_DeletesNote1()
+    public function testDelete_DeleteNote1()
     {
         $noteId = 1;
         $this->delete($this->_getEndpoint() . $noteId);
         $this->assertResponseOk($this->_getBodyAsString());
 
-        $note = NotesTable::load()->findById($noteId)->first();
+        $note = NotesTable::load()->findNotesByNotebook($noteId)->first();
 
         $this->assertNull($note);
     }
