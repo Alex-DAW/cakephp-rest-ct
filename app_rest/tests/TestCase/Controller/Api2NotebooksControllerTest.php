@@ -46,14 +46,12 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
     public function testGetNotebook1_ById()
     {
         $expectedData = [
-            [
             'id' => 1,
             'user_id' => 1,
             'title' => 'Title 1',
             'shape' => NotebookShapes::TODO,
             'created' => '2021-01-18T10:39:23+00:00',
             'modified' => '2021-01-18T10:41:31+00:00'
-            ]
         ];
 
         $this->get($this->_getEndpoint().'1');
@@ -115,8 +113,12 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
 
     public function testDelete_DeletesNotebook1()
     {
+        $userId = 1;
         $notebookId = 1;
-        $this->delete($this->_getEndpoint() . $notebookId);
+
+        $endpoint = '/api/v2/users/'.$userId.'/notebooks/'.$notebookId;
+
+        $this->delete($endpoint);
         $this->assertResponseOk($this->_getBodyAsString());
 
         $notebook = NotebooksTable::load()->findNotebookById($notebookId)->first();
@@ -129,5 +131,13 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
         $notebookId = 15;
         $this->delete($this->_getEndpoint() . $notebookId);
         $this->assertResponseError($this->_getBodyAsString());
+    }
+
+    public function testDelete_DeleteNotebookFromOtherUser_NotFound()
+    {
+        $endpoint = '/api/v2/users/2/notebooks/1';
+
+        $this->delete($endpoint);
+        $this->assertResponseCode(404);
     }
 }
