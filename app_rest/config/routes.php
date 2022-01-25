@@ -11,6 +11,7 @@ return static function (RouteBuilder $routes) {
             'httponly' => true,
         ]));
         $builder->connect('/ping/*', \App\Controller\Api2PingController::route());
+        $builder->connect('/users/{userID}/notebooks/{notebookID}/notes/{noteID}/emojis/*', \App\Controller\Api2ReactionsController::route());
         $builder->connect('/users/{userID}/notebooks/{notebookID}/notes/*', \App\Controller\Api2NotesController::route());
         $builder->connect('/users/{userID}/notebooks/*', \App\Controller\Api2NotebooksController::route());
         $builder->connect('/users/*', \App\Controller\Api2UsersController::route());
