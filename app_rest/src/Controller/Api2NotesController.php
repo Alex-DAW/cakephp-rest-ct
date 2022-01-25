@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Model\Entity\Note;
+use App\Model\Table\NotebooksTable;
 use App\Model\Table\NotesTable;
+use Cake\Http\Exception\ForbiddenException;
 
 /**
  * @property NotesTable $Notes
+ * @property NotebooksTable $Notebooks
  */
 class Api2NotesController extends Api2Controller
 {
@@ -14,6 +17,7 @@ class Api2NotesController extends Api2Controller
     public function initialize(): void
     {
         parent::initialize();
+        $this->Notebooks = NotebooksTable::load();
         $this->Notes = NotesTable::load();
     }
 
@@ -42,20 +46,23 @@ class Api2NotesController extends Api2Controller
 
      protected function getList()
      {
+         $this->_checkNotebookAccess();
          $notebookId = $this->request->getParam('notebookID');
          $notes = $this->Notes->findNotesByNotebook($notebookId)->toArray();
          $this->return = $notes;
      }
 
-     protected function getData($noteId)
+     protected function getData($id)
      {
-         $notes = $this->Notes->findNoteById($noteId)->toArray();
+         $this->_checkNotebookAccess();
+         $notes = $this->Notes->findNoteById($id)->firstOrFail();
          $this->return = $notes;
      }
 
-     protected function edit($notebookId, $data)
+     protected function edit($id, $data)
      {
-         $note= $this->Notes->get($notebookId);
+         $this->_checkNotebookAccess();
+         $note= $this->Notes->get($id);
          $note = $this->Notes->patchEntity($note, $data);
 
 
@@ -65,6 +72,7 @@ class Api2NotesController extends Api2Controller
 
     public function delete($id)
     {
+        $this->_checkNotebookAccess();
         $this->Notes->get($id);
         $this->Notes->softDelete($id);
         $this->return = false;
