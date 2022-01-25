@@ -41,7 +41,8 @@ class Api2NotebooksController extends Api2Controller
 
     protected function getData($notebookId)
     {
-        $notebook = $this->Notebooks->findNotebookById($notebookId)->toArray();
+        $userId = $this->request->getParam('userID');
+        $notebook = $this->Notebooks->findNotebookByIdAndUser($notebookId, $userId)->firstOrFail();
         $this->return = $notebook;
     }
 
@@ -55,7 +56,9 @@ class Api2NotebooksController extends Api2Controller
 
     protected function edit($id, $data)
     {
-        $notebook = $this->Notebooks->get($id);
+        $userId = $this->request->getParam('userID');
+
+        $notebook = $this->Notebooks->findNotebookByIdAndUser($id, $userId)->firstOrFail();
         $notebook = $this->Notebooks->patchEntity($notebook, $data);
 
 
@@ -65,7 +68,9 @@ class Api2NotebooksController extends Api2Controller
 
     public function delete($id)
     {
-        $this->Notebooks->get($id);
+        $userId = $this->request->getParam('userID');
+        $this->Notebooks->findNotebookByIdAndUser($id, $userId)->firstOrFail();
+
         $this->Notebooks->softDelete($id);
         $this->return = false;
     }
