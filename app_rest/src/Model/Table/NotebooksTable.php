@@ -32,10 +32,10 @@ class NotebooksTable extends AppTable
             ->where(['user_id' => $userId]);
     }
 
-    public function findNotebookById($id) : Query
+    public function findNotebookByIdAndUser($id, $userId) : Query
     {
         $notebook = $this->find()
-            ->where(['id' => $id]);
+            ->where(['id' => $id, 'user_id'=> $userId]);
 
         return $notebook;
     }
