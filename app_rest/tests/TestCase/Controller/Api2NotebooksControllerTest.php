@@ -59,6 +59,16 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
         $return = json_decode($this->_getBodyAsString(), true)['data'];;
         $this->assertEquals($expectedData, $return);
     }
+
+    public function testGetNotebook1_IncorrectUserInURL_ExpectsNotFound()
+    {
+        $endpoint = '/api/v2/users/2/notebooks/1';
+
+        $this->get($endpoint);
+
+        $this->assertResponseCode(404);
+    }
+
     public function testGetList_GetUser1_GetsSingleUser()
     {
         $expectedData = [
@@ -91,6 +101,18 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
         $this->assertEquals($data['title'], $return['title']);
     }
 
+    public function testEdit_editNotebookFromOtherUser_NotFound()
+    {
+        $endpoint = '/api/v2/users/2/notebooks/1';
+        $data = [
+          'title' => 'Test'
+        ];
+
+        $this->patch($endpoint, $data);
+
+        $this->assertResponseCode(404);
+    }
+
     public function testEdit_EditInvalidShape_ThrowsException()
     {
         $data = [
@@ -121,7 +143,7 @@ class Api2NotebooksControllerTest extends Api2CommonErrorsTest
         $this->delete($endpoint);
         $this->assertResponseOk($this->_getBodyAsString());
 
-        $notebook = NotebooksTable::load()->findNotebookById($notebookId)->first();
+        $notebook = NotebooksTable::load()->findNotebookByIdAndUser($notebookId, $userId)->first();
 
         $this->assertNull($notebook);
     }
