@@ -19,6 +19,8 @@ class Reaction extends Entity
     ];
 
     protected $_hidden = [
-        'deleted'
+        'deleted',
+        'created',
+        'modified'
     ];
 }
