@@ -19,6 +19,7 @@ class NotesTable extends AppTable
     {
         $this->addBehavior('Timestamp');
         $this->belongsTo('Notebooks')->setForeignKey('notebook_id');
+        $this->hasMany('Reactions');
     }
 
     public function findNotesByNotebook($notebookId) : Query
@@ -31,6 +32,17 @@ class NotesTable extends AppTable
     {
         $note = $this->find()
             ->where(['id' => $id]);
+
+        return $note;
+    }
+
+    public function getNoteWithReactions($id) : Note
+    {
+        /** @var Note $note */
+        $note = $this->find()
+            ->where(['id' => $id])
+            ->contain('Reactions')
+            ->firstOrFail();;
 
         return $note;
     }
