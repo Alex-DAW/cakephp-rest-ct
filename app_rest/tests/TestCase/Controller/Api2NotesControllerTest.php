@@ -90,7 +90,14 @@ class Api2NotesControllerTest extends Api2CommonErrorsTest
             'description' => 'Note test 1',
             'completed' => '2021-01-25T16:39:23+00:00',
             'created' => '2021-01-18T10:39:23+00:00',
-            'modified' => '2021-01-18T10:41:31+00:00'
+            'modified' => '2021-01-18T10:41:31+00:00',
+            'reactions' => [
+                [
+                    'id' => 1,
+                    'note_id' => 1,
+                    'emoji' => ':D',
+                ]
+            ]
         ];
 
         $this->get($this->_getEndpoint().'1');
