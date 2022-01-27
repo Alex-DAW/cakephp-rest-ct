@@ -33,6 +33,7 @@ class Api2NotesController extends Api2Controller
 
     protected function addNew($data)
     {
+        $this->_checkNotebookAccess();
         $note = $this->Notes->newEmptyEntity();
         /** @var Note $note */
         $note = $this->Notes->patchEntity($note, $data);
@@ -67,7 +68,6 @@ class Api2NotesController extends Api2Controller
          $note= $this->Notes->get($id);
          $note = $this->Notes->patchEntity($note, $data);
 
-
          $saved = $this->Notes->saveOrFail($note);
          $this->return = $this->Notes->get($saved->id);
      }
@@ -79,4 +79,16 @@ class Api2NotesController extends Api2Controller
         $this->Notes->softDelete($id);
         $this->return = false;
     }
+
+    private function _checkNotebookAccess(): void
+    {
+        $notebookId = $this->request->getParam('notebookID');
+        $userId = $this->request->getParam('userID');
+        $notebook = $this->Notebooks->findNotebookByIdAndUser($notebookId, $userId)
+            ->first();
+        if (!$notebook) {
+            throw new ForbiddenException('UserID does not match notebookID');
+        }
+    }
+
 }
