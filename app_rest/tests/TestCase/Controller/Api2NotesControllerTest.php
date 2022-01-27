@@ -14,7 +14,8 @@ class Api2NotesControllerTest extends Api2CommonErrorsTest
 
     protected $fixtures = [
         'app.Notes',
-        'app.Notebooks'
+        'app.Notebooks',
+        'app.Reactions'
     ];
 
     protected function _getEndpoint(): string
