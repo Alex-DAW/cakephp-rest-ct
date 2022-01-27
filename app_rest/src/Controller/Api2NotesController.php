@@ -54,9 +54,11 @@ class Api2NotesController extends Api2Controller
 
      protected function getData($id)
      {
+         /** @var Note $note */
          $this->_checkNotebookAccess();
-         $notes = $this->Notes->findNoteById($id)->firstOrFail();
-         $this->return = $notes;
+         $note = $this->Notes->getNoteWithReactions($id);
+
+         $this->return = $note;
      }
 
      protected function edit($id, $data)
