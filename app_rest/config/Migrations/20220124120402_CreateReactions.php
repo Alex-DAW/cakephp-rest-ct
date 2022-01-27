@@ -15,11 +15,6 @@ class CreateReactions extends AbstractMigration
     public function change()
     {
         $table = $this->table('reactions');
-        $table->addColumn('user_id', 'integer', [
-            'default' => null,
-            'limit' => 11,
-            'null' => false,
-        ]);
         $table->addColumn('note_id', 'integer', [
             'default' => null,
             'limit' => 11,
